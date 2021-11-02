@@ -1,3 +1,4 @@
+#if 0
 /*
 The MIT License (MIT)
 
@@ -1162,3 +1163,4 @@ namespace codal
         }
     }
 }
+#endif
