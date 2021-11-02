@@ -35,20 +35,22 @@ namespace codal
 {
     namespace _mbed
     {
-        void Timer::triggered()
+        // TQD_TODO
+		void Timer::triggered()
         {
             timeout.attach_us(callback(this, &Timer::triggered), this->period);
-            this->trigger();
+            this->trigger(false);
         }
 
-        Timer::Timer() : codal::Timer()
+        Timer::Timer() : codal::Timer(llt, 0, 1)
         {
             this->period = 10000;
             timer.start();
             timeout.attach_us(callback(this, &Timer::triggered), this->period);
         }
 
-        /**
+        
+		/**
          * request to the physical timer implementation code to provide a trigger callback at the given time.
          * note: it is perfectly legitimate for the implementation to trigger before this time if convenient.
          * @param t Indication that t time units (typically microsends) have elapsed.
@@ -72,5 +74,15 @@ namespace codal
             this->sync(elapsed);
             enableInterrupts();
         }
+		
+		void Timer::sync(CODAL_TIMESTAMP t)
+		{
+			// First, update our timestamps.
+			currentTimeUs += t;
+			overflow += t;
+			currentTime += overflow / 1000;
+			overflow = overflow % 1000;
+		}
+	
     }
 }
