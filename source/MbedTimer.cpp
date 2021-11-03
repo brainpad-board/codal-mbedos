@@ -42,11 +42,12 @@ namespace codal
             this->trigger(false);
         }
 
-        Timer::Timer() : codal::Timer(llt, 0, 1)
+        Timer::Timer() : codal::Timer()
         {
             this->period = 10000;
             timer.start();
             timeout.attach_us(callback(this, &Timer::triggered), this->period);
+			this->interrupState = __get_PRIMASK();
         }
 
         
@@ -82,6 +83,20 @@ namespace codal
 			overflow += t;
 			currentTime += overflow / 1000;
 			overflow = overflow % 1000;
+		}
+		
+		int Timer::enableInterrupts() {
+			if ((this->interrupState & 1) == 0)
+				__enable_irq();
+			
+			return DEVICE_OK;
+		}
+		
+		int Timer::disableInterrupts() {
+			this->interrupState = __get_PRIMASK();			
+			__disable_irq();
+			
+			return DEVICE_OK;
 		}
 	
     }

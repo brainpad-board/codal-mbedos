@@ -176,8 +176,9 @@ namespace codal
 
             mb::Timer timer;
             mb::Timeout timeout;
+			uint32_t interrupState;
 			
-			codal::_mbed::_LowLevelTimer llt;
+			//codal::_mbed::_LowLevelTimer llt;
 
             void triggered();
 
@@ -201,6 +202,9 @@ namespace codal
              * request to the physical timer implementation code to trigger immediately.
              */
             virtual void syncRequest();
+			
+			virtual int enableInterrupts();
+			virtual int disableInterrupts();
 			
 			void sync(CODAL_TIMESTAMP t);
         };
