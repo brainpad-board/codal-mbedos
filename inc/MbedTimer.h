@@ -35,12 +35,150 @@ namespace codal
 {
     namespace _mbed
     {
-        class Timer : public codal::Timer
+        class _LowLevelTimer : public codal::LowLevelTimer {
+			public:
+			
+			
+			_LowLevelTimer() : LowLevelTimer(1) {
+				
+			}
+			/**
+			 * Enables this timer instance and begins counting
+			 **/
+			virtual int enable() {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Enables the IRQ of this timer instance
+			 **/
+			virtual int enableIRQ() {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Disables this timer instance and stops counting
+			 **/
+			virtual int disable() {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Disables the IRQ of this timer instance
+			 **/
+			virtual int disableIRQ() {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Resets the counter of this timer.
+			 **/
+			virtual int reset() {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Sets the mode of the timer
+			 *
+			 * @param t the timer mode to use. Underlying hardware should be configured appropriately.
+			 **/
+			virtual int setMode(TimerMode t) {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Sets the compare value of a capture compare register in the underlying hardware
+			 *
+			 * @param channel the channel to load the value into.
+			 *
+			 * @param value the value to load into the capture compare register
+			 **/
+			virtual int setCompare(uint8_t channel, uint32_t value) {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Offsets the compare value of a capture compare register in the underlying hardware
+			 *
+			 * @param channel the channel to offset by value.
+			 *
+			 * @param value the value to offset the capture compare register by.
+			 **/
+			virtual int offsetCompare(uint8_t channel, uint32_t value) {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Disables the interrupt for the given channel, and sets the value to 0.
+			 *
+			 * @param channel the channel to clear
+			 **/
+			virtual int clearCompare(uint8_t channel) {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Returns the counter value of the underlying hardware.
+			 **/
+			virtual uint32_t captureCounter() {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Sets the frequency of the timer based on a speed given in Khz.
+			 *
+			 * @param speedKHz the speed of the timer in KHz.
+			 **/
+			virtual int setClockSpeed(uint32_t speedKHz) {
+				//TQD_TODO
+				
+				return 0;
+			}
+
+			/**
+			 * Sets the resolution of the timer counter.
+			 *
+			 * @param t the TimerBitMode value to use.
+			 **/
+			virtual int setBitMode(TimerBitMode t) {
+				//TQD_TODO
+				
+				return 0;
+			}
+			
+		};
+		
+		
+		class Timer : public codal::Timer
         {
-            uint32_t period;
+            // TQD_TODO
+			uint32_t period;
 
             mb::Timer timer;
             mb::Timeout timeout;
+			uint32_t interrupState;
+			
+			//codal::_mbed::_LowLevelTimer llt;
 
             void triggered();
 
@@ -64,6 +202,11 @@ namespace codal
              * request to the physical timer implementation code to trigger immediately.
              */
             virtual void syncRequest();
+			
+			virtual int enableInterrupts();
+			virtual int disableInterrupts();
+			
+			void sync(CODAL_TIMESTAMP t);
         };
     }
 }
